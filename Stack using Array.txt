@@ -1,0 +1,66 @@
+//Implementation of Stacks using Arrays
+#include<stdio.h>
+#include<stdlib.h>
+#define size 10
+int stack[size],top=-1;
+void PUSH()
+{
+ printf("\n\tPUSH");
+ if(top==size-1)
+  printf("\n\tSTACK OVERFLOW!");
+ else
+ {
+  int val;
+  printf("\n\tEnter a value :: ");
+  scanf("%d",&val);
+  stack[++top]=val;
+  printf("\tVALUE INSERTED.");
+ }
+}
+void POP()
+{
+ printf("\n\tPOP");
+ if(top==-1)
+  printf("\n\tSTACK UNDERFLOW!");
+ else
+  printf("\n\tElement popped : %d", stack[top--]);
+}
+void PEEP()
+{
+ printf("\n\tPEEP");
+ if(top==-1)
+  printf("\n\tSTACK IS EMPTY!");
+ else
+  printf("\n\tTOP = %d,\t STACK[TOP] = %d",top,stack[top]);
+}
+void DISPLAY()
+{
+ printf("\n\tDisplay");
+ if(top==-1)
+  printf("\n\tSTACK IS EMPTY!");
+ else
+ {
+  printf("Stack elements :\n\t");
+  for(int i=top;i>=0;i--)
+   printf("%d ",stack[i]); 
+ }
+}
+void main()
+{
+ int choice; char ch='y';
+ do
+ {
+  printf("\n\tSTACK OPERATION\n\n\t1.PUSH\n\t2.POP\n\t3.PEEP\n\t4.DISPLAY \n\tEnter your choice :: ");
+  scanf("%d",&choice);
+  switch(choice)
+  {
+   case 1: PUSH(); break;
+   case 2: POP(); break;
+   case 3: PEEP(); break;
+   case 4: DISPLAY(); break;
+   default: printf("\n\tWrong choice!"); 
+  }
+  printf("\n\n\tDo you want to continue (Y/N) :: ");
+  scanf("%s",&ch);
+ }while(ch=='y'||ch=='Y');
+}

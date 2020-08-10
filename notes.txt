@@ -1,0 +1,40 @@
+precedence of operators
+
+ sizeof(char) = 1
+ sizeof(short int) = 2
+ sizeof(int) = 4
+ sizeof(long int) = 8
+ sizeof(float) = 4
+ sizeof(double) = 8
+ sizeof(long long int) = 8
+
+if int was 1 byte,
+then max positive int= (01111111)2 = 2^7 -1 = 127   // (-1) for 0
+but int is 4 bytes, hence max pos. int = 2^31-1, unsigned int is from 0 to 2^32
+
+float approximates to 6 decimals
+
+for length, ++l or l++ give same output.
+
+scanf("...") doesn't print nor edit output screen
+
+in scanf for strings, no '&' i.e. scanf("%s",&str) is wrong, it should be just scanf("%s",str)
+whereas for other types like int, scanf("%d",&a) is correct
+because str itself is a pointer, so &str doesn't make sense
+
+
+space breaks a string i.e. space can't be in a string.
+scanf("%s") inputs a WORD. 
+("%s%s") takes input 2 words which can be seperated by a space in user input.
+
+gcc-GNU Compiler Collection
+
+In gcc, to include header file should give link in compile command (lz: l-library, z-headerfile), e.g. to include math.h in basic.c: 
+gcc basic.c -lm
+
+An array of size n can be declared after n is taken user input.
+
+Doubt: 
+char s[]="ab";   sizeof(s)=3
+char s[2]="ab";  sizeof(s)=2 -----what happened to size for null char?
+

@@ -1,0 +1,194 @@
+//Search and Sort
+//Search
+/*
+//1.Linear Search
+#include<stdio.h>
+
+void LinearS(int A[],int size,int item)
+{
+ int flag=0;
+ for(int i=0;i<size;++i)
+  if(A[i]==item)
+  {
+   flag=1;
+   printf("%d is found at position %d\n",item,i+1);
+  }
+ if(!flag)
+  printf("%d NOT found\n",item);
+}
+void main()
+{
+ int size,A[10],item;
+ printf("Enter size of array :: ");
+ scanf("%d",&size);
+ printf("Enter %d elements :\n",size);
+ for(int i=0;i<size;++i)
+  scanf("%d",&A[i]);
+ printf("Enter element to be searched for :: ");
+ scanf("%d",&item);
+ LinearS(A,size,item);
+}
+*//*
+//2.Binary Search
+#include<stdio.h>
+
+int BinaryS(int A[],int size,int item)
+{
+ int beg=0,last=size-1,mid;
+ while(beg<=last)
+ {
+  mid=(beg+last)/2;
+  if(item==A[mid])
+   return mid;
+  else if(item>A[mid])
+   beg=mid+1;
+  else
+   last=mid-1;
+ }
+ return -1;
+}
+void main()
+{
+ int size,A[10],item,pos;
+ printf("Enter size of array :: ");
+ scanf("%d",&size);
+ printf("Enter array elements : \n(must be sorted in Asc order)\n");
+ for(int i=0;i<size;++i)
+  scanf("%d",&A[i]);
+ printf("Enter element to be searched for :: ");
+ scanf("%d",&item);
+ pos=BinaryS(A,size,item)+1;
+ if(!pos) 
+  printf("%d NOT found\n",item);
+ else
+  printf("%d is found at position %d\n",item,pos);  
+}
+*/
+//SORTING
+/*
+//1.Bubble sort
+#include<stdio.h>
+
+void bubbleS(int A[],int size)
+{
+ int t,ctr=0;
+ for(int i=0;i<size;++i)
+ {
+  for(int j=0; j<(size-1)-i; ++j)
+   if(A[j]>A[j+1])
+   {
+    t=A[j];
+    A[j]=A[j+1];
+    A[j+1]=t;
+   }
+   printf("\nArray after iteration -%d- is :  ",++ctr);
+   for(int k=0; k<size; ++k)
+    printf("%d ",A[k]);
+ }
+}
+void main()
+{
+ int size,A[10];
+ printf("Enter size of array :: ");
+ scanf("%d",&size);
+ printf("Enter %d elements :\n",size);
+ for(int i=0;i<size;++i)
+  scanf("%d",&A[i]);
+ bubbleS(A,size);
+ printf("\n\nSorted list : \n");
+ for(int i=0; i<size; ++i)
+  printf("%d ",A[i]);
+ printf("\n");
+}
+*//*
+//2.Selection Sort
+#include<stdio.h>
+
+void SelectionS(int A[],int size)
+{
+ int small,tmp,pos;
+ for(int i=0; i<size-1; ++i)
+ {
+  small=A[i];
+  pos=i;
+  for(int j=i+1;j<size;++j)
+   if(A[j]<small)
+   { 
+    small=A[j]; 
+    pos=j;
+   }
+  tmp=A[i];
+  A[i]=A[pos];
+  A[pos]=tmp;
+   printf("\nArray after pass -%d- is :  ",i+1);
+  for(int k=0; k<size; ++k)
+   printf("%d ",A[k]);
+ }
+}
+void main()
+{
+ int size,A[10];
+ printf("Enter size of array :: ");
+ scanf("%d",&size);
+ printf("Enter %d elements :\n",size);
+ for(int i=0;i<size;++i)
+  scanf("%d",&A[i]);
+ SelectionS(A,size);
+ printf("\n\nSorted list : \n");
+ for(int i=0; i<size; ++i)
+  printf("%d ",A[i]);
+ printf("\n");
+}
+*//*
+//3.Insertion Sort
+#include<stdio.h>
+void InsertionS(int A[], int size) 
+{ 
+ for(int i=1,j;i<size;++i) 
+ {  
+  int key=A[i];          //first element of remaining unsorted list
+  for(j=i-1; key<A[j] && j>=0;--j) 
+   A[j+1]=A[j];      
+  A[j+1]=key; 
+  
+  printf("\nArray after pass -%d- is :  ",i);
+  for(int k=0; k<size; ++k)
+   printf("%d ",A[k]); 
+ } 
+} 
+void main()
+{
+ int size,A[10];
+ printf("Enter size of array :: ");
+ scanf("%d",&size);
+ printf("Enter %d elements :\n",size);
+ for(int i=0;i<size;++i)
+  scanf("%d",&A[i]);
+ InsertionS(A,size);
+ printf("\n\nSorted list : \n");
+ for(int i=0; i<size; ++i)
+  printf("%d ",A[i]);
+ printf("\n");
+}
+*/
+//4.Merge Sort
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

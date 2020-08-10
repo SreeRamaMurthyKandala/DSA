@@ -1,0 +1,64 @@
+//Implementation of Queues using Arrays
+#include<stdio.h>
+#include<stdlib.h>
+#define size 10
+int queue[size],front=-1,rear=-1;
+void INSERT()
+{
+ printf("\n\tINSERT");
+ if(rear==size-1)
+  printf("\n\tQUEUE IS FULL!");
+ else
+ {
+  if(front==-1)
+   ++front;
+  int val;
+  printf("\n\tEnter a value :: ");
+  scanf("%d",&val);
+  queue[++rear]=val;
+  printf("\tVALUE INSERTED.");
+ }
+}
+void DELETE()
+{
+ printf("\n\tDELETE");
+ if(front==-1)
+  printf("\n\tQUEUE IS EMPTY!");
+ else 
+ {
+  printf("\n\tElement deleted : %d", queue[front]);
+  if(front==rear)
+   front=rear=-1;
+  else
+   front++;
+ }
+}
+void DISPLAY()
+{
+ printf("\n\tDISPLAY\n\t");
+ if(front==-1)
+  printf("\n\tQUEUE IS EMPTY!");
+ else
+ {
+  printf("Queue elements :\n\t");
+  for(int i=front;i<=rear;i++)
+   printf("%d ",queue[i]); 
+ }
+}
+void main()
+{
+ int ch;
+ while(1)
+ {
+  printf("\n\n\tQUEUE OPERATION\n\n\t1.INSERT\n\t2.DELETE\n\t3.DISPLAY\n\t4.Exit\n\tEnter your choice :: ");
+  scanf("%d",&ch);
+  switch(ch)
+  {
+   case 1: INSERT(); break;
+   case 2: DELETE(); break;
+   case 3: DISPLAY(); break;
+   case 4: exit(0);
+   default: printf("\n\tWrong choice!"); 
+  }
+ }
+}
