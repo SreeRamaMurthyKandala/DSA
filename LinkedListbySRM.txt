@@ -1,0 +1,179 @@
+//Linked List
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node
+{
+ int data;
+ struct node *next;
+}*head=NULL,*t=NULL,*new=NULL;
+
+void CreateList(int n);   //Creates a Linked List with n nodes
+void Insert(int ch);      //Inserts a new node at ch i.e (beg/mid/end)
+void Delete(int d);       //Deletes node with data==d
+int Search(int d);        //Returns position of node with data==d
+void Traverse();          //Prints data in all nodes
+void truncate();          //Frees all nodes i.e. deletes all nodes; Must before exiting program.
+
+void main()
+{
+ int n,ch,D;
+
+ while(1)
+ {
+  printf("\n\n\tLinked List Operations\n\n\t1.Create New List\n\t2.Display\n\t3.Insert\n\t4.Delete\n\t5.Search\n\t6.Truncate\n\t7.exit\n\tEnter your choice :: ");
+  scanf("%d",&ch);
+  switch(ch)
+  {
+   case 1: printf("Enter number of nodes to create list :: ");
+	   scanf("%d",&n);
+	   truncate();
+ 	   CreateList(n);
+	   break;
+   case 2: Traverse(); 
+           break;
+   case 3: printf("\n\tInsert at 1.beginning 2.middle or 3.end? :: ");
+           scanf("%d",&D);
+	   Insert(D);
+	   break;
+   case 4: printf("\n\tEnter data to be deleted :: ");
+           scanf("%d",&D);
+           Delete(D);
+	   break;
+   case 5: printf("\n\tEnter data to be searched for :: ");
+           scanf("%d",&D);
+	   printf("\n\t%d is at position %d",D,Search(D));	
+	   break;
+   case 6: truncate();
+           break;
+   case 7: truncate();
+           exit(0);
+   default: printf("\n\tWrong Choice!");
+  }
+ }
+}
+
+void Traverse()
+{
+ if(head==NULL)
+ {
+  printf("\n\tEmpty List");
+  return;
+ }
+ printf("\n\tLinked List :\n\t");
+ for(t=head;t!=NULL;t=t->next)
+  printf("%d, ",t->data);
+}
+void CreateList(int n)
+{
+ for(int i=0;i<n;++i)
+ {
+  new=(struct node*) malloc(sizeof(struct node));
+  if(new==NULL)
+  {
+   printf("\n\tMemory NOT Allocated!");
+   return;
+  }
+  printf("\n\t#Node %d:\n\tEnter data :: ",i+1);
+  scanf("%d",&new->data);
+  new->next=NULL;
+  if(!i)
+   head=t=new;
+  else
+  {
+   t->next=new;
+   t=t->next;
+  }
+ }
+}
+void Insert(int ch)
+{
+ int pos;
+ new=(struct node*) malloc(sizeof(struct node));
+ if(new==NULL)
+ {
+  printf("\n\tMemory NOT Allocated!");
+  return;
+ }
+ printf("\n\tEnter data :: ");
+ scanf("%d",&new->data);
+ new->next=NULL;
+ if(head==NULL && (ch==2||ch==3) )
+  ch=1;
+ switch(ch)
+ {
+  case 1: new->next=head;
+          head=new;
+          break;
+  case 2: printf("\n\tEnter new node position :: ");
+          scanf("%d",&pos);
+          t=head;
+          for(int i=0; i<pos-1 && t->next!=NULL; ++i,t=t->next);
+          new->next=t->next;
+          t->next=new;
+          break;
+  case 3: for(t=head;t->next!=NULL;t=t->next);
+          t->next=new;
+          break;
+  default: printf("\n\tWrong Choice!\n\tEnter again :: ");
+	   scanf("%d",&ch);
+	   Insert(ch);
+ }
+}
+void Delete(int d)
+{
+ struct node *p,*q;
+ p=head; q=p->next;
+ if(p->data==d)         //Data to be deleted is in beg
+ { 
+  head=q;
+  free(p);
+  return;
+ }
+ else
+  while(q->data!=d && q->next!=NULL)
+  {
+   p=p->next;
+   q=q->next;
+  }
+ if(q->data!=d)
+ {
+  printf("\n\t%d NOT found! \n\tDELETION UNSUCCESSFUL!",d);
+  return;
+ }
+ else if(q->next==NULL)      //Data to be deleted is in end
+  p->next=NULL;
+ else                   //Data to be deleted is in mid
+  p->next=q->next;
+ free(q);
+}
+int Search(int d)
+{
+ int pos=0;
+ for(t=head; t!=NULL && t->data!=d; t=t->next,++pos);
+ return (t!=NULL)?pos:-1;
+}
+void truncate()
+{
+ for(;head!=NULL;head=t)
+ {
+  t=head->next;
+  free(head);
+ }
+ head=t=NULL;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
