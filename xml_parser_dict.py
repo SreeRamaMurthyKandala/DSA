@@ -1,7 +1,7 @@
 import xmltodict
 import os
+import re
 import pandas as pd
-from pprint import pprint
 
 def extract_details_from_dict(xml_dict):
     extracted_file_path = ""
@@ -13,19 +13,23 @@ def extract_details_from_dict(xml_dict):
     if not engine_node:
         return None, None, None
 
-    # Extract the file path from the first property with "cmd"
+    # Extract properties
     properties = engine_node.get("properties", {}).get("property", [])
     if not isinstance(properties, list):
         properties = [properties]  # Ensure it's a list for uniform processing
 
+    # Extract file path and file name from the "cmd" property
     for prop in properties:
         if "cmd" in prop.get("@name", ""):
-            extracted_file_path = prop.get("#text", "").strip()
-            if extracted_file_path:
-                extracted_file_name = os.path.basename(extracted_file_path.split()[0])
+            cmd_value = prop.get("#text", "").strip()
+            # Regex to extract the path (ending with .py)
+            match = re.search(r'(base_path.*?\.py)', cmd_value)
+            if match:
+                extracted_file_path = match.group(1)
+                extracted_file_name = os.path.basename(extracted_file_path)
             break
 
-    # Extract the table name
+    # Extract table name
     for prop in properties:
         if prop.get("@name") in ["CMDL_TABLE_NAME", "MKT_TABLE_NAME"]:
             extracted_table_name = prop.get("#text", "").strip()
