@@ -7,26 +7,25 @@ def extract_details_from_xml(file_path):
         # Parse the XML file
         tree = ET.parse(file_path)
         root = tree.getroot()
-        namespace = {"ns": "http://idnprod.ipc.us.aexp.com/schema/engine-node-1.0"}  # Define namespace
 
         # Initialize variables
         extracted_file_path = ""
         extracted_file_name = ""
         extracted_table_name = ""
 
-        # Extract file path from the first <property name="&lt;cmd&gt;">
-        cmd_property = root.find(".//ns:property[@name='&lt;cmd&gt;']", namespace)
-        if cmd_property is not None:
-            extracted_file_path = cmd_property.text.strip()
-            extracted_file_name = os.path.basename(extracted_file_path.split()[0])  # Extract file name
+        # Find the first property tag with the cmd pattern and extract the file path
+        for prop in root.iter("property"):
+            if "cmd" in prop.attrib.get("name", ""):  # Look for cmd in the property name
+                extracted_file_path = prop.text.strip()
+                if extracted_file_path:
+                    extracted_file_name = os.path.basename(extracted_file_path.split()[0])  # Extract file name
+                break
 
-        # Extract table name from CMDL_TABLE_NAME or MKT_TABLE_NAME
-        table_property = root.find(".//ns:property[@name='CMDL_TABLE_NAME']", namespace)
-        if table_property is None:
-            table_property = root.find(".//ns:property[@name='MKT_TABLE_NAME']", namespace)
-        
-        if table_property is not None:
-            extracted_table_name = table_property.text.strip()
+        # Find the property for table names (CMDL_TABLE_NAME or MKT_TABLE_NAME)
+        for prop in root.iter("property"):
+            if prop.attrib.get("name") in ["CMDL_TABLE_NAME", "MKT_TABLE_NAME"]:
+                extracted_table_name = prop.text.strip()
+                break
 
         return extracted_file_path, extracted_file_name, extracted_table_name
 
@@ -44,7 +43,7 @@ def process_xml_files_in_directory(directory_path, output_excel):
         if file_name.endswith(".xml"):
             file_path = os.path.join(directory_path, file_name)
             extracted_file_path, extracted_file_name, extracted_table_name = extract_details_from_xml(file_path)
-            
+
             if extracted_file_path and extracted_file_name and extracted_table_name:
                 data.append({
                     "XML File Name": file_name,
@@ -60,7 +59,6 @@ def process_xml_files_in_directory(directory_path, output_excel):
         print(f"Data successfully written to {output_excel}")
     else:
         print("No data extracted.")
-
 
 # Directory path containing XML files and output Excel file path
 directory_path = "/path/to/xml/files"  # Replace with your directory path
